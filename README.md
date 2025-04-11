@@ -23,8 +23,9 @@ aws sts get-caller-identity
 # Initialize Terraform project
 terraform init
 
-### 📥 **Import Existing AWS Resources vpc**
+## 📥 Import Existing AWS Resources
 
+# VPC
 terraform import aws_vpc.my_vpc vpc-019404d6f880dcc9c
 
 
