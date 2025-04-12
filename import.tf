@@ -1,50 +1,60 @@
 
 # Importing the VPC
 import {
- to = aws_vpc.my-vpc
- id = "vpc-019404d6f880dcc9c"
+ to = aws_vpc.my_vpc
+ id = "vpc-0ac4d144b578d720e"
 }
 
 # Importing Subnets
 import {
- to = aws_subnet.privatesb1
- id = "subnet-0c5892c45a4d995fb"
+ to = aws_subnet.private_sb1
+ id = "subnet-0e837a21012310b1c"
 }
 
 import {
- to = aws_subnet.publicsb2
- id = "subnet-03cdd6daabd284a94"
+ to = aws_subnet.public_sb1
+ id = "subnet-06fb14c27e6996d2a"
 }
 
-import {
- to = aws_subnet.publicsb1
- id = "subnet-0961dce02092769a3"
-}
-
-import {
- to = aws_subnet.private_sb_2
- id = "subnet-0fa5e685b4dd663d4"
-}
 
 # Importing Route Tables
 import {
- to = aws_route_table.public-rt
- id = "rtb-027ff10e0c35996b3"
+ to = aws_route_table.public_rt
+ id = "rtb-01794a466cfce8d9c"
 }
 
 import {
- to = aws_route_table.private-rt
- id = "rtb-0132c7d534a73e366"
+ to = aws_route_table.private_rt
+ id = "rtb-093c7cf4b3d419468"
 }
+
+# Public Subnet Association
+import {
+  to = aws_route_table_association.public_sb1
+  id = "subnet-06fb14c27e6996d2a/rtb-01794a466cfce8d9c"
+}
+
+# Private Subnet Association
+import {
+  to = aws_route_table_association.private_sb1
+  id = "subnet-0e837a21012310b1c/rtb-093c7cf4b3d419468"
+}
+
 
 # Importing Internet Gateway
 import {
- to = aws_internet_gateway.my-igw
- id = "igw-034796decd99b3bb8"
+ to = aws_internet_gateway.my_igw
+ id = "igw-087d6d013177be043"
 }
 
 # Importing NAT Gateway
 import {
- to = aws_nat_gateway.my-natgw
- id = "nat-0a78d83080671ec93"
+ to = aws_nat_gateway.my_nat
+ id = "nat-04571001a907d3fb4"
+}
+
+# Importing Elastic IP
+import {
+  to = aws_eip.my_eip
+  id = "eipalloc-0990091a6d81598df"
 }
