@@ -68,6 +68,12 @@ terraform import aws_nat_gateway.my_natgw nat-0a78d83080671ec93
 ```bash
 terraform import aws_eip.my_eip eipalloc-0990091a6d81598df
 ```
+### terraform commands
+```bash
+terrraform plan
+terraform apply
+terraform destroy
+```
 ### Note 
 ```bash
 When we execute "terraform destroy" it will not delete the main route table. We have to go to console and directly delete the my_vpc.
