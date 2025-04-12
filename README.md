@@ -46,6 +46,13 @@ terraform import aws_subnet.privatesb2 subnet-0fa5e685b4dd663d4
 terraform import aws_route_table.public_rt  rtb-027ff10e0c35996b3
 terraform import aws_route_table.private_rt rtb-0132c7d534a73e366
 ```
+### Association Route Tables
+
+```bash
+terraform import aws_route_table_association.public_sb1 subnet-06fb14c27e6996d2a/rtb-01794a466cfce8d9c
+terraform import aws_route_table_association.private_sb1 subnet-0e837a21012310b1c/rtb-093c7cf4b3d419468
+```
+
 ### Internet Gateway
 
 ```bash
@@ -55,6 +62,11 @@ terraform import aws_internet_gateway.my_igw igw-034796decd99b3bb8
 
 ```bash
 terraform import aws_nat_gateway.my_natgw nat-0a78d83080671ec93
+```
+### Elastic IP
+
+```bash
+terraform import aws_eip.my_eip eipalloc-0990091a6d81598df
 ```
 
 
