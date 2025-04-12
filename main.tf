@@ -1,80 +1,90 @@
 # VPC
-resource "aws_vpc" "my-vpc" {
+resource "aws_vpc" "my_vpc" {
  cidr_block = "10.0.0.0/26"
  tags = {
-  Name = "my-vpc"
+  Name = "my_vpc"
  }
 }
 
 # Subnets
-resource "aws_subnet" "privatesb1" {
+resource "aws_subnet" "private_sb1" {
  vpc_id   = aws_vpc.my_vpc.id
  cidr_block = "10.0.0.32/28"
  tags = {
-  Name = "privatesb1"
+  Name = "private_sb1"
  }
 }
 
-resource "aws_subnet" "publicsb2" {
- vpc_id   = aws_vpc.my_vpc.id
- cidr_block = "10.0.0.16/28"
- tags = {
- Name = "publicsb2"
- }
-}
-
-resource "aws_subnet" "publicsb1" {
+resource "aws_subnet" "public_sb1" {
  vpc_id   = aws_vpc.my_vpc.id
  cidr_block = "10.0.0.0/28"
  tags = {
- Name = "publicsb1"
+ Name = "public_sb1"
  }
 }
 
-resource "aws_subnet" "privatesb2" {
- vpc_id  = aws_vpc.my_vpc.id
- cidr_block = "10.0.0.48/28"
- tags = {
- Name = "privatesb2"
- }
-}
 
 # Main Route Table
-resource "aws_route_table" "public-rt" {
+resource "aws_route_table" "public_rt" {
  vpc_id = aws_vpc.my_vpc.id
  route {
  cidr_block = "0.0.0.0/0"
  gateway_id = aws_internet_gateway.my_igw.id
  }
  tags = {
- Name = "public-rt"
+ Name = "public_rt"
  }
 }
 
 # Private Route Table
-resource "aws_route_table" "private-rt" {
+resource "aws_route_table" "private_rt" {
  vpc_id = aws_vpc.my_vpc.id
  route {
  cidr_block = "0.0.0.0/0"
- nat_gateway_id = aws_nat_gateway.my_nat_gw.id
+ nat_gateway_id = aws_nat_gateway.my_nat.id
  }
  tags = {
- Name = "private-rt"
+ Name = "private_rt"
  }
 }
 
+
+# Public Route Table Association with Public Subnet
+resource "aws_route_table_association" "public_sb1" {
+  subnet_id      = aws_subnet.public_sb1.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
+# Private Route Table Association with Private Subnet
+resource "aws_route_table_association" "private_sb1" {
+  subnet_id      = aws_subnet.private_sb1.id
+  route_table_id = aws_route_table.private_rt.id
+}
+
+
 # Internet Gateway
-resource "aws_internet_gateway" "my-igw" {
+resource "aws_internet_gateway" "my_igw" {
  vpc_id = aws_vpc.my_vpc.id
  tags = {
- Name = "my-igw"
+ Name = "my_igw"
  }
 }
 
 # NAT Gateway
-resource "aws_nat_gateway" "my-natgw" {
- subnet_id = aws_subnet.public_sb_1.id
+resource "aws_nat_gateway" "my_nat" {
+ subnet_id = aws_subnet.public_sb1.id
+ allocation_id = aws_eip.my_eip.id
+ depends_on = [ aws_internet_gateway.my_igw]
  tags = {
- Name = "my-natgw"
+ Name = "my_nat"
  }
+}
+
+# Elastic IP
+resource "aws_eip" "my_eip" {
+  domain = "vpc"
+
+  tags = {
+    Name = "my_eip"
+  }
 }
